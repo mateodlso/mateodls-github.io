@@ -394,6 +394,54 @@ h1{
   margin-bottom: 10px;
 }
 
+.fa-star.checked {
+  color: #ffd700; /* Color amarillo */
+}
+
+.fa-star {
+  color: #ccc; /* Color gris claro */
+}
+
+/* Dark mode */
+
+/* Estilo para las tarjetas en modo noche */ 
+.bg-dark .card.mb-4.shadow-sm.custom-card.cursor-active { background-color: #343a40; } 
+/*.bg-dark .card-text { color: #ffffff;} /* Color de texto blanco */  
+
+body.bg-dark .card { background-color: #343a40; 
+  color: white; 
+  border: 1px solid #444; }
+
+.bg-dark .btn.btn-light.btn-lg.btn-block {  background-color: #212529;
+  border: none;
+ color: white;}
+
+ .bg-dark .album.py-5.bg-light {
+  background-color: #212529 !important; /* Usar !important para forzar el fondo oscuro */
+}
+
+.bg-dark .list-group-item.list-group-item-action { background-color: #343a40; 
+  color: white; 
+  border: 1px solid #444; }
+
+.bg-dark .img-thumbnail {
+  background-color: transparent; /* Elimina el fondo de la imagen */
+  border-color: #444; /* Opcional: Cambia el color del borde en modo oscuro si lo deseas */
+  }
+
+.bg-dark .row.mb-4.product { background-color: #343a40; 
+  color: white; 
+  border: none;
+}
+
+.bg-dark #containerProd h4, .bg-dark #containerProd p {
+  color: white; 
+}
+
+
+
+
+
 
 
 
