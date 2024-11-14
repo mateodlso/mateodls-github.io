@@ -18,7 +18,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     const comment = document.getElementById('rating-text').value;
                     const score = document.getElementById('rating-score').textContent.match(/\d+/)[0]; // Obtiene el valor de la puntuación seleccionada en las estrellas
-                    const username = localStorage.getItem('username') || 'Usuario Anónimo';  // Obtener el nombre de usuario desde localStorage, o un valor por defecto
+                    
+                    // Obtener los datos del perfil del usuario desde localStorage
+                    const userProfile = JSON.parse(localStorage.getItem('userProfile'));
+                    const users = JSON.parse(localStorage.getItem('users'));
+
+                    // Inicializar la variable username
+                    let username = 'Usuario Anónimo';
+
+                    // Verificar si el perfil de usuario tiene firstName y lastName
+                    if (userProfile && userProfile.firstName && userProfile.lastName && userProfile.firstName !== '' && userProfile.lastName !== '') {
+                    username = `${userProfile.firstName}_${userProfile.lastName}`; // Combinar el nombre y apellido
+                    } else if (users && users.length > 0 && users[0].email) {
+                    username = users[0].email; // Si no hay nombre, usar el email del primer usuario
+                    }
+                    //const username = localStorage.getItem('username') || 'Usuario Anónimo' 
 
                     var options = { year: '2-digit', month: '2-digit', day: '2-digit' };
                     const currentDate = new Date().toLocaleDateString("en-GB", options);
@@ -106,6 +120,7 @@ function showData(product) {
                     <p>${product.description}</p>
                     <h4>Precio: ${product.currency} ${formattedCost}</h4>
                     <p>Cantidad de vendidos: ${product.soldCount}</p>
+                    <button id="buy-button" class="btn btn-primary">Comprar</button>
                 </div>  
                 </div>
                 
@@ -154,6 +169,23 @@ function showData(product) {
 
 
         container.innerHTML = productInfoHTML;
+ // Asignar evento al botón de compra
+document.getElementById("buy-button").addEventListener("click", function () {
+    const productToCart = {
+        name: product.name,
+        cost: product.cost,
+        currency: product.currency,
+        image: product.images[0], // Usa la primera imagen del array
+        quantity: 1 // La cantidad inicial es 1 cuando el usuario compra
+    };
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push(productToCart);
+    localStorage.setItem("cart", JSON.stringify(cart)); // Guarda el carrito en el localStorage
+    window.location.href = "cart.html"; // Redirige al carrito
+});
+
+
 
         // Ahora que las estrellas del formulario están en el DOM, agrega los eventos de clic
         const starRatingContainer = document.getElementById('star-rating');
@@ -224,9 +256,6 @@ function fetchRatings() {
                 const comentarioElement = document.createElement('p');
                 comentarioElement.textContent = comentario.description;
                 divComentario.appendChild(comentarioElement);
-
-        
-
 
                 ratingsContainer.appendChild(divComentario);
             });
@@ -315,6 +344,9 @@ function setProductID(id) {
     window.location = "product-info.html"
 }
 
+// Función para formatear números con separación de miles
 function formatNumber(num) {
-    return num.toLocaleString('es-ES');
+    return num.toLocaleString('es-ES', { minimumFractionDigits: 0, useGrouping: true});
 }
+  
+
